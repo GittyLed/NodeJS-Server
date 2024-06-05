@@ -1,7 +1,7 @@
 import { configDotenv } from 'dotenv';
 import  express  from 'express';
-import volunteerRouter from './src/routers/VolunteerRouter';
-import requestRouter from './src/routers/RequestRouter';
+import volunteerRouter from './src/routers/VolunteerRouter.js';
+import requestRouter from './src/routers/RequestRouter.js';
 
 configDotenv();
 const server = express();

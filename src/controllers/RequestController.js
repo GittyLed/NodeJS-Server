@@ -1,30 +1,9 @@
-import autoBind from "auto-bind";
+import BaseController from './BaseController.js';
+import service from '../services/RequestService.js';
 
-class RequestController{
+class RequestController extends BaseController{
     constructor(service){
-        this.service = service;
-        autoBind(this);
-    }
-
-    async getAll(req, res, next){
-        try {
-            const response = await this.service.getAll(req.query);
-            return res.status(response.statusCode).json(response);
-        }
-        catch (e) {
-            next(e);
-        }
-    }
-
-    async getById(req, res, next){
-        const { id } = req.params;
-        try {
-            const response = await this.service.getById(id);
-            return res.status(response.statusCode).json(response);
-        }
-        catch (e) {
-            next(e);
-        }
+        super(service);
     }
 
     async update(req, res, next) {

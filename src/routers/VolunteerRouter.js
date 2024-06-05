@@ -1,5 +1,5 @@
 import express from 'express';
-import volunteerController from '../controllers/VolunteerController';
+import volunteerController from '../controllers/VolunteerController.js';
 
 const router = express.Router();
 
