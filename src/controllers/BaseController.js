@@ -9,8 +9,9 @@ class BaseController{
     async getAll(req, res, next){
         try {
             const response = await this.service.getAll(req.query);
-            return res.status(response.statusCode)
-            //.json(response);
+            console.log(response);
+            return res.status(200)
+            .json(response);
         }
         catch (e) {
             next(e);

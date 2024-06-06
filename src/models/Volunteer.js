@@ -10,6 +10,6 @@ const VolunteerSchema = new Schema({
     areasOfHelp : Array
 })
 
-const Volunteer = mongoose.model("volunteers", VolunteerSchema);
+const Volunteer = mongoose.model("Volunteer", VolunteerSchema, 'volunteer');
 
 export default Volunteer;

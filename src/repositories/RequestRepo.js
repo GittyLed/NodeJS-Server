@@ -7,7 +7,8 @@ class RequestRepo {
         connect();
     }
     async getAll() {
-        let res = await this.model.find().exec();
+        let res = await this.model.find({}).exec();
+        console.log(res);
         return res;
         //return new HttpResponse(res);
     }
