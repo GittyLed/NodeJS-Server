@@ -6,9 +6,14 @@ class RequestRepo {
         this.model = model;
         connect();
     }
-    async getAll() {
-        let res = await this.model.find({}).exec();
-        console.log(res);
+    async getAll(filters) {
+        //build the query object based on the filters.
+        let query = {};
+        if(filters.status){
+            query.status = new RegExp(filters.status, 'i');
+        }
+        let res = await this.model.find(query).exec();
+        console.log('Query:', query);
         return res;
         //return new HttpResponse(res);
     }
