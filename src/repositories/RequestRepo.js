@@ -9,74 +9,81 @@ class RequestRepo {
     async getAll(filters) {
         //build the query object based on the filters.
         let query = {};
-        if(filters.status){
+
+        if (filters.status) {
             query.status = new RegExp(filters.status, 'i');
         }
+
+        let locationFilter = [];
         if (filters.location) {
-            query.location = Number(filters.location);
+            locationFilter = [
+                { 'street': new RegExp(filters.location, 'i') },
+                { 'city': new RegExp(filters.location, 'i') }
+            ]
         }
+        console.log('Location filter', locationFilter);
         console.log('Query:', query);
-        let res = await this.model.aggregate(
-            [
-                {
-                    '$match' : query
-                },
-                {
-                  '$lookup': {
-                    'from': 'location', 
-                    'localField': 'location', 
-                    'foreignField': '_id', 
-                    'as': 'location_info'
-                  }
-                }, {
-                  '$lookup': {
-                    'from': 'status', 
-                    'localField': 'status', 
-                    'foreignField': '_id', 
-                    'as': 'status_info'
-                  }
-                }, {
-                  '$lookup': {
-                    'from': 'priority', 
-                    'localField': 'importance', 
-                    'foreignField': '_id', 
-                    'as': 'priority_info'
-                  }
-                }, {
-                  '$unwind': {
-                    'path': '$location_info'
-                  }
-                }, {
-                  '$unwind': {
-                    'path': '$status_info'
-                  }
-                }, {
-                  '$unwind': {
-                    'path': '$priority_info'
-                  }
-                }, {
-                  '$addFields': {
-                    'city': '$location_info.city', 
-                    'street': '$location_info.street', 
-                    'importance': '$priority_info.description', 
-                    'status': '$status_info.description'
-                  }
-                }, {
-                  '$project': {
-                    'location': 0, 
-                    'location_info': 0, 
-                    'status_info': 0, 
-                    'priority_info': 0
-                  }
-                }
-              ]
-        ).exec();
-        console.log(res);
+        const pipeline = [
+          {
+            '$lookup': {
+              'from': 'location', 
+              'localField': 'location', 
+              'foreignField': '_id', 
+              'as': 'location_info'
+            }
+          }, {
+            '$lookup': {
+              'from': 'status', 
+              'localField': 'status', 
+              'foreignField': '_id', 
+              'as': 'status_info'
+            }
+          }, {
+            '$lookup': {
+              'from': 'priority', 
+              'localField': 'importance', 
+              'foreignField': '_id', 
+              'as': 'priority_info'
+            }
+          }, {
+            '$unwind': {
+              'path': '$location_info'
+            }
+          }, {
+            '$unwind': {
+              'path': '$status_info'
+            }
+          }, {
+            '$unwind': {
+              'path': '$priority_info'
+            }
+          }, {
+            '$addFields': {
+              'city': '$location_info.city', 
+              'street': '$location_info.street', 
+              'importance': '$priority_info.description', 
+              'status': '$status_info.description'
+            }
+          }, {
+            '$project': {
+              'location': 0, 
+              'location_info': 0, 
+              'status_info': 0, 
+              'priority_info': 0
+            }
+          },
+          {
+            '$match' : query
+        }
+        ]
+
+        if(locationFilter.length > 0){
+          pipeline.push({ '$match': { '$or': locationFilter } });
+        }
+
+        let res = await this.model.aggregate(pipeline).exec();
         return res;
-        //return new HttpResponse(res);
     }
-
-
 
     async getById(id) {
         try {
