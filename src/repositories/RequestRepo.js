@@ -16,9 +16,11 @@ class RequestRepo {
             query.location = Number(filters.location);
         }
         console.log('Query:', query);
-        let res = await this.model.find(query)
-        .aggregate(
+        let res = await this.model.aggregate(
             [
+                {
+                    '$match' : query
+                },
                 {
                   '$lookup': {
                     'from': 'location', 
@@ -68,7 +70,7 @@ class RequestRepo {
                   }
                 }
               ]
-        );
+        ).exec();
         console.log(res);
         return res;
         //return new HttpResponse(res);
