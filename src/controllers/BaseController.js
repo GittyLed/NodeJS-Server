@@ -29,5 +29,5 @@ class BaseController{
         }
     }
 }
-//service...
+
 export default BaseController;

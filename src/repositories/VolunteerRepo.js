@@ -7,7 +7,10 @@ class VolunteerRepo {
         connect();
     }
     async getAll(query) {
-        return await this.model.find(query).exec();
+        let res = await this.model.find({}).exec();
+        console.log(res);
+        return res;
+        // return await this.model.find(query).exec();
     }
 
     async getById(id) {

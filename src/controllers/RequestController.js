@@ -17,5 +17,5 @@ class RequestController extends BaseController{
         }
     }
 }
-//service...
+
 export default new RequestController(service);
