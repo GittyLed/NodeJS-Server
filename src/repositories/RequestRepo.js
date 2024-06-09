@@ -6,8 +6,18 @@ class RequestRepo {
         this.model = model;
         connect();
     }
-    async getAll() {
-        let res = await this.model.aggregate(
+    async getAll(filters) {
+        //build the query object based on the filters.
+        let query = {};
+        if(filters.status){
+            query.status = new RegExp(filters.status, 'i');
+        }
+        if (filters.location) {
+            query.location = Number(filters.location);
+        }
+        console.log('Query:', query);
+        let res = await this.model.find(query)
+        .aggregate(
             [
                 {
                   '$lookup': {
@@ -63,6 +73,8 @@ class RequestRepo {
         return res;
         //return new HttpResponse(res);
     }
+
+
 
     async getById(id) {
         try {
