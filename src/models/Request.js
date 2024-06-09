@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const RequestSchema = new Schema({
     _id: Number,
-    location : String, 
+    location : Number, 
     description : String,
     importance : String,
     people : Number,

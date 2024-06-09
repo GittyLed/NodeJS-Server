@@ -12,6 +12,9 @@ class RequestRepo {
         if(filters.status){
             query.status = new RegExp(filters.status, 'i');
         }
+        if (filters.location) {
+            query.location = Number(filters.location);
+        }
         let res = await this.model.find(query).exec();
         console.log('Query:', query);
         return res;
