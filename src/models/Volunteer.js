@@ -8,7 +8,7 @@ const VolunteerSchema = new Schema({
     lastName : String,
     phoneNumber : String,
     areasOfHelp : Array
-})
+}, { versionKey: false })
 
 const Volunteer = mongoose.model("Volunteer", VolunteerSchema, 'volunteer');
 
