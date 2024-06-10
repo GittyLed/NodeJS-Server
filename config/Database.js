@@ -1,9 +1,11 @@
+import { configDotenv } from 'dotenv';
 import mongoose from 'mongoose';
 mongoose.set("strictQuery", false);
+configDotenv();
 
 export default async function connect() {
     try {
-        await mongoose.connect("mongodb+srv://GittySari:g&snodeserver@helpinghubdb.6clffz4.mongodb.net/HelpingHubDB");
+        await mongoose.connect(process.env.CONN_STRING);
     }
     catch (e) {
         console.log(e);
