@@ -10,11 +10,11 @@ class BaseController{
         try {
             const filters = req.query;
             const response = await this.service.getAll(filters);
-            //console.log(response);
             return res.status(200)
             .json(response);
         }
         catch (e) {
+            console.log("error!!!")
             next(e);
         }
     }
@@ -23,7 +23,7 @@ class BaseController{
         const { id } = req.params;
         try {
             const response = await this.service.getById(id);
-            return res.status(response.statusCode).json(response);
+            return res.status(200).json(response);
         }
         catch (e) {
             next(e);

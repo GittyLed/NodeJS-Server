@@ -21,7 +21,7 @@ class VolunteerRepo {
                 error.statusCode = 404;
                 throw error;
             }
-            return new HttpResponse(vol);
+            return vol;
         }
         catch(errors){
             console.log(errors.message);
@@ -33,7 +33,8 @@ class VolunteerRepo {
         try{
             let vol = await this.model.create(data);
             if(vol){
-                return new HttpResponse(vol);
+                console.log(vol);
+                return vol;
             }
             else{
                 throw new Error('The action failed, please check your credentials and try again.');

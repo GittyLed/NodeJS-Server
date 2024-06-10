@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const VolunteerSchema = new Schema({
-    id : String,
+    _id : String,
     firstName : String,
     lastName : String,
     phoneNumber : String,

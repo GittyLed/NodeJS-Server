@@ -8,11 +8,12 @@ class VolunteerService extends BaseService{
     // check 
     async add(data){
         try{
-            const response = await this.repo.add(req.body);
-            return res.status(response.statusCode).json(response);
+            let a = await this.repo.add(data);
+            console.log(a);
+            return a;
         }
         catch(errors){
-            next(errors);
+            console.log(errors);
         }
     }
 }

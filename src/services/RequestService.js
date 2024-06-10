@@ -7,13 +7,12 @@ class RequestService extends BaseService{
     }
     // check 
     async update(id, data){
-        //const {id} = req.params;
         try{
-            const response = await this.repo.update(id, data);
-            return res.status(response.statusCode).json(response);
+            return await this.repo.update(id, data);
         }
         catch(errors){
-            next(errors);
+            console.log(errors);
+            // next(errors);
         }
     }
 }

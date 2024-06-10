@@ -1,5 +1,8 @@
 import connect from '../../config/Database.js';
 import Request from '../models/Request.js';
+import buildPipeline from '../RequestPipeline.js';
+import { byParams } from '../Filters.js';
+import { byId } from '../Filters.js';
 
 class RequestRepo {
     constructor(model) {
@@ -7,80 +10,19 @@ class RequestRepo {
         connect();
     }
     async getAll(filters) {
-        //build the query object based on the filters.
-        let query = {};
-        if(filters.status){
-            query.status = new RegExp(filters.status, 'i');
-        }
-        if (filters.location) {
-            query.location = Number(filters.location);
-        }
-        console.log('Query:', query);
-        let res = await this.model.aggregate(
-            [
-                {
-                    '$match' : query
-                },
-                {
-                  '$lookup': {
-                    'from': 'location', 
-                    'localField': 'location', 
-                    'foreignField': '_id', 
-                    'as': 'location_info'
-                  }
-                }, {
-                  '$lookup': {
-                    'from': 'status', 
-                    'localField': 'status', 
-                    'foreignField': '_id', 
-                    'as': 'status_info'
-                  }
-                }, {
-                  '$lookup': {
-                    'from': 'priority', 
-                    'localField': 'importance', 
-                    'foreignField': '_id', 
-                    'as': 'priority_info'
-                  }
-                }, {
-                  '$unwind': {
-                    'path': '$location_info'
-                  }
-                }, {
-                  '$unwind': {
-                    'path': '$status_info'
-                  }
-                }, {
-                  '$unwind': {
-                    'path': '$priority_info'
-                  }
-                }, {
-                  '$addFields': {
-                    'city': '$location_info.city', 
-                    'street': '$location_info.street', 
-                    'importance': '$priority_info.description', 
-                    'status': '$status_info.description'
-                  }
-                }, {
-                  '$project': {
-                    'location': 0, 
-                    'location_info': 0, 
-                    'status_info': 0, 
-                    'priority_info': 0
-                  }
-                }
-              ]
-        ).exec();
-        console.log(res);
-        return res;
-        //return new HttpResponse(res);
+        const smallPipe = byParams(filters);
+        const pipeline = buildPipeline(smallPipe);
+        let allRequests = await this.model.aggregate(pipeline).exec();
+        return allRequests;
     }
-
-
 
     async getById(id) {
         try {
-            let request = await this.model.findById(id);
+            const smallPipe = byId(id);
+            const pipeline = buildPipeline(smallPipe);
+            // let request = await this.model.findById(id).aggregate(pipeline).exec();
+            let request = await this.model.aggregate(pipeline).exec();
+            console.log(request);
             if (!request) {
                 let error = new Error('Could not find the request.');
                 error.statusCode = 404;
@@ -97,7 +39,7 @@ class RequestRepo {
     async update(id, data){
         try{
             let request = await this.model.findByIdAndUpdate(id, data, {new : true});
-            return new HttpResponse(request);
+            return request;
         }
         catch(errors){
             console.log(errors.message);

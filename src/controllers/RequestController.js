@@ -10,7 +10,7 @@ class RequestController extends BaseController{
         const { id } = req.params;
         try {
             const response = await this.service.update(id, req.body);
-            return res.status(response.statusCode).json(response);
+            return res.status(200).json(response);
         }
         catch (e) {
             next(e);
