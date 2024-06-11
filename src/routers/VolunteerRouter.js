@@ -3,7 +3,6 @@ import volunteerController from '../controllers/VolunteerController.js';
 
 const router = express.Router();
 
-//erase getall...
 router.get('/', volunteerController.getAll);
 
 router.get('/:id', volunteerController.getById);

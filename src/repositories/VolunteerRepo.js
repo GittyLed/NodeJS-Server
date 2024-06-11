@@ -6,11 +6,10 @@ class VolunteerRepo {
         this.model = model;
         connect();
     }
-    async getAll(query) {
-        let res = await this.model.find({}).exec();
-        console.log(res);
-        return res;
-        // return await this.model.find(query).exec();
+    async getAll() {
+        let vol = await this.model.find({}).exec();
+        console.log(vol);
+        return vol;
     }
 
     async getById(id) {
@@ -33,7 +32,6 @@ class VolunteerRepo {
         try{
             let vol = await this.model.create(data);
             if(vol){
-                console.log(vol);
                 return vol;
             }
             else{

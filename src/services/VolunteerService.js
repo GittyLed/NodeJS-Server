@@ -5,12 +5,11 @@ class VolunteerService extends BaseService{
     constructor(repo){
         super(repo);
     }
-    // check 
+    
     async add(data){
         try{
-            let a = await this.repo.add(data);
-            console.log(a);
-            return a;
+            let vol = await this.repo.add(data);
+            return vol;
         }
         catch(errors){
             console.log(errors);

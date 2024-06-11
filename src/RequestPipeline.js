@@ -55,5 +55,6 @@ export default function buildPipeline(smallPipe) {
     console.log(i);
     pipeline.unshift(i);
   }
+  
   return pipeline;
 }

@@ -1,4 +1,3 @@
-
 function byParams(filters) {
     let query = { status : new RegExp('w', 'i') };
     let locationFilter = [];

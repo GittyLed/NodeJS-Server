@@ -10,11 +10,9 @@ class BaseController{
         try {
             const filters = req.query;
             const response = await this.service.getAll(filters);
-            return res.status(200)
-            .json(response);
+            return res.status(200).json(response);
         }
         catch (e) {
-            console.log("error!!!")
             next(e);
         }
     }

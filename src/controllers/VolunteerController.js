@@ -16,5 +16,5 @@ class VolunteerController extends BaseController{
         }
     }
 }
-//service...
+
 export default new VolunteerController(service);
