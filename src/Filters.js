@@ -15,13 +15,14 @@ function byParams(filters) {
                 { 'city': new RegExp(filters.location, 'i') }
             ]
         }
-        console.log('Location filter', locationFilter);
-        console.log('Query:', query);
+        // console.log('Location filter', locationFilter);
+        // console.log('Query:', query);
     }
     const pipeline = [{ '$match': query }]
     if (locationFilter.length > 0) {
         pipeline.push({ '$match': { '$or': locationFilter } });
     }
+    console.log('Pipeline:', JSON.stringify(pipeline, null, 2)); 
     return pipeline;
 }
 

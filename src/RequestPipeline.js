@@ -52,8 +52,7 @@ export default function buildPipeline(smallPipe) {
   ]
 
   for(let i of smallPipe){
-    console.log(i);
-    pipeline.unshift(i);
+    pipeline.splice(pipeline.length-1, 0, i); 
   }
   
   return pipeline;
