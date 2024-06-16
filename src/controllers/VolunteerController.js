@@ -2,8 +2,9 @@ import BaseController from './BaseController.js';
 import service from '../services/VolunteerService.js';
 
 class VolunteerController extends BaseController{
-    constructor(service){
+    constructor(service){        
         super(service);
+        this.name = "volunteer";
     }
 
     async add(req, res, next) {

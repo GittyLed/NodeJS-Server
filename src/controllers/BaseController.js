@@ -21,6 +21,11 @@ class BaseController{
         const { id } = req.params;
         try {
             const response = await this.service.getById(id);
+            if(!response || response.length === 0){
+                let error = new Error(`${this.name} does not exist.`);
+                error.status = 404;
+                throw error;
+            }
             return res.status(200).json(response);
         }
         catch (e) {

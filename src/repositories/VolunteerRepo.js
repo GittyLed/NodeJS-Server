@@ -15,11 +15,6 @@ class VolunteerRepo {
     async getById(id) {
         try {
             let vol = await this.model.findById(id);
-            if (!vol) {
-                let error = new Error('Volunteer does not exist.');
-                error.statusCode = 404;
-                throw error;
-            }
             return vol;
         }
         catch(errors){

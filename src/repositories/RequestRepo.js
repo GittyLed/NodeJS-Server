@@ -21,11 +21,6 @@ class RequestRepo {
             const smallPipe = byId(id);
             const pipeline = buildPipeline(smallPipe);
             let request = await this.model.aggregate(pipeline).exec();
-            if (!request) {
-                let error = new Error('Could not find the request.');
-                error.statusCode = 404;
-                throw error;
-            }
             return request;
         }
         catch(errors){
