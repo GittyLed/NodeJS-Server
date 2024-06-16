@@ -24,23 +24,18 @@ class VolunteerRepo {
         }
         catch(errors){
             console.log(errors.message);
-            throw errors;
+            throw new Error('An error occurred while retrieving the volunteer. Please try again later.');
         }
     }
 
     async add(data){
         try{
             let vol = await this.model.create(data);
-            if(vol){
-                return vol;
-            }
-            else{
-                throw new Error('The action failed, please check your credentials and try again.');
-            }
+            return vol;
         }
         catch(errors){
             console.log(errors.message);
-            throw errors;
+            throw new Error("The action failed, please check your credentials and try again.");
         }
     }
 }

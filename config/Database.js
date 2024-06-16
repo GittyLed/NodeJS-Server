@@ -1,14 +1,17 @@
 import { configDotenv } from 'dotenv';
 import mongoose from 'mongoose';
-mongoose.set("strictQuery", false);
+
 configDotenv();
+
+mongoose.set("strictQuery", false);
 
 export default async function connect() {
     try {
         await mongoose.connect(process.env.CONN_STRING);
     }
     catch (e) {
-        console.log(e);
+        console.log(e.message);
+        throw new Error("unable to connect to mongoDB: ");
     }
 
     const db = mongoose.connection;

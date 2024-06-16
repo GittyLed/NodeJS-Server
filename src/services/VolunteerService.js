@@ -13,6 +13,7 @@ class VolunteerService extends BaseService{
         }
         catch(errors){
             console.log(errors);
+            throw new Error("unable to add volunteer.")
         }
     }
 }

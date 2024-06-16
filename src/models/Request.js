@@ -15,5 +15,4 @@ const RequestSchema = new Schema({
 
 const Request = mongoose.model('Request', RequestSchema, 'helpRequest');
 
-
 export default Request;

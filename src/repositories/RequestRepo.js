@@ -1,7 +1,7 @@
 import connect from '../../config/Database.js';
 import Request from '../models/Request.js';
-import buildPipeline from '../RequestPipeline.js';
-import { byParams, byId } from '../Filters.js';
+import buildPipeline from '../utils/RequestPipeline.js';
+import { byParams, byId } from '../utils/Filters.js';
 
 class RequestRepo {
     constructor(model) {
@@ -30,7 +30,7 @@ class RequestRepo {
         }
         catch(errors){
             console.log(errors.message);
-            throw errors;
+            throw new Error('An error occurred while retrieving the request. Please try again later');
         }
     }
 
@@ -41,7 +41,7 @@ class RequestRepo {
         }
         catch(errors){
             console.log(errors.message);
-            throw errors;
+            throw new Error("An error occurred while trying to update the request's status. Please try again later.");
         }
     }
 }

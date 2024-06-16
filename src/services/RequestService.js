@@ -12,6 +12,7 @@ class RequestService extends BaseService{
         }
         catch(errors){
             console.log(errors);
+            throw new Error("unable to update request.");
         }
     }
 }
