@@ -1,15 +1,10 @@
-import connect from '../../config/Database.js';
 import Volunteer from '../models/Volunteer.js';
+import BaseRepo from './BaseRepo.js'
 
-class VolunteerRepo {
-    constructor(model) {
-        this.model = model;
-        connect();
-    }
-    async getAll() {
-        let vol = await this.model.find({}).exec();
-        console.log(vol);
-        return vol;
+class VolunteerRepo extends BaseRepo{
+    
+    constructor(model){
+        super(model);
     }
 
     async getById(id) {
